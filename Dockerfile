@@ -17,7 +17,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   tesseract-ocr-eng \
   tesseract-ocr-fra \
   tesseract-ocr-spa \
-  tesseract-ocr-deu
+  tesseract-ocr-deu \
+  tesseract-ocr-nld \
 
 ENV LANG=C.UTF-8
 

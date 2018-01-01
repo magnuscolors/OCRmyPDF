@@ -24,10 +24,7 @@ RUN apt-get update \
 		tesseract-ocr-fra \
 		tesseract-ocr-deu \
 		tesseract-ocr-spa \
-		tesseract-ocr-por \
-		tesseract-ocr-ara \
-		tesseract-ocr-rus \
-		tesseract-ocr-chi-sim 
+		tesseract-ocr-nld
 
 ENV LANG=C.UTF-8
 
