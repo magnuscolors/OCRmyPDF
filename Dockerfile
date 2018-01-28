@@ -1,6 +1,6 @@
 # OCRmyPDF
 #
-FROM      ubuntu:17.04
+FROM 	ubuntu:17.04
 MAINTAINER James R. Barlow <jim@purplerock.ca>
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -12,13 +12,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   qpdf \
   poppler-utils \
   unpaper \
-  libffi-dev \ 
-  tesseract-ocr \
-  tesseract-ocr-eng \
-  tesseract-ocr-fra \
-  tesseract-ocr-spa \
-  tesseract-ocr-deu \
-  tesseract-ocr-nld \
+  libffi-dev
+
+RUN add-apt-repository ppa:alex-p/tesseract-ocr
+
+RUN apt-get update \
+	&& apt-get autoremove -y \
+	&& apt-get install -y --no-install-recommends \
+		tesseract-ocr \
+		tesseract-ocr-eng \
+		tesseract-ocr-fra \
+		tesseract-ocr-deu \
+		tesseract-ocr-spa \
+		tesseract-ocr-nld
 
 ENV LANG=C.UTF-8
 
