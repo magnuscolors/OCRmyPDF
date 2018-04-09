@@ -12,7 +12,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   qpdf \
   poppler-utils \
   unpaper \
-  libffi-dev
+  libffi-dev\
+  inotify-tools
 
 RUN add-apt-repository ppa:alex-p/tesseract-ocr
 
