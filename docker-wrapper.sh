@@ -9,20 +9,18 @@ cd /home/docker
 
 WATCHED_DIR=/mnt/omp/pdf_in
 export SHELL=/bin/bash
-OCRmyPDF=/opt/bin/ocrmypdf.sh
-
 (echo start; inotifywait -mr -e create,moved_to "$WATCHED_DIR" --format "%w%f") |
 while read event; do
 
                  oIFS=$IFS
                  IFS=$'\n'
-                 shopt -s nocasematch
                  find $WATCHED_DIR -iname *.pdf |
                  while read -r file; do
                         fileocr="${file/pdf_in/pdf_ocr}"
                         filedecrypt="${file/pdf_in/pdf_dec}"
                         fileorig="${file/pdf_in/pdf_orig}"
                         filename="`basename $file`"
+                        shopt -s nocasematch
                         case "$filename" in
                         .*.pdf) rm "$file" && echo "$file" "deleted";;
                         *.pdf) qpdf --decrypt "$file" "$filedecrypt" && \
@@ -32,7 +30,7 @@ while read event; do
                                echo "$filename" "OCR-ed";;
                         *) mv "$file" "$fileorig" && echo "$file" "Oops" ;;
                         esac
+                        shopt -u nocasematch
                  done
-                 shopt -u nocasematch
                  IFS=$oIFS
 done
