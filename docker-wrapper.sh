@@ -23,10 +23,10 @@ while read event; do
                         shopt -s nocasematch
                         case "$filename" in
                         .*.pdf) rm "$file" && echo "$file" "deleted";;
-                        *.pdf) qpdf --decrypt "$file" "$filedecrypt" && \
-                               ocrmypdf --deskew --force-ocr -l "eng+nld" "$filedecrypt" "$fileocr" && \
-                               mv "$file" "$fileorig" && \
-                               rm "$filedecrypt" && \
+                        *.pdf) qpdf --decrypt "$file" "$filedecrypt" && echo "$file" "decrypted" && \
+                               ocrmypdf --deskew --force-ocr -l "eng+nld" "$filedecrypt" "$fileocr" && echo "$file" "ocr-ed" && \
+                               mv "$file" "$fileorig" && echo "$file" "moved to orig" && \
+                               rm "$filedecrypt" && echo "$file" "deleted from pdf_dec" && \
                                echo "$filename" "OCR-ed";;
                         *) mv "$file" "$fileorig" && echo "$file" "Oops" ;;
                         esac
