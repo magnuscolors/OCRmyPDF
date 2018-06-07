@@ -18,16 +18,35 @@ while read event; do
                  while read -r file; do
                         fileocr="${file/pdf_in/pdf_ocr}"
                         filedecrypt="${file/pdf_in/pdf_dec}"
+                        filedecerror="${file/pdf_in/pdf_dec_error}"
                         fileorig="${file/pdf_in/pdf_orig}"
                         filename="`basename $file`"
                         shopt -s nocasematch
                         case "$filename" in
                         .*.pdf) rm "$file" && echo "$file" "deleted";;
-                        *.pdf) qpdf --decrypt "$file" "$filedecrypt" && echo "$file" "decrypted" && \
-                               ocrmypdf --deskew --force-ocr -l "eng+nld" "$filedecrypt" "$fileocr" && echo "$file" "ocr-ed" && \
-                               mv "$file" "$fileorig" && echo "$file" "moved to orig" && \
-                               rm "$filedecrypt" && echo "$file" "deleted from pdf_dec" && \
-                               echo "$filename" "OCR-ed";;
+                        *.pdf) ocrmypdf --deskew --force-ocr --output-type pdf -l "eng+nld" "$file" "$fileocr"
+                        return_code=$?
+                        if [ $return_code -eq 0 ]
+                            then
+                              echo "$file" "ocr-ed"
+                        else
+                            if [ $return_code -eq 8 ]
+                                then
+                                    echo "$file" "encrypted, decrypting" && \
+                                qpdf --decrypt "$file" "$filedecrypt" && \
+                                    echo "$file" "decrypted" || echo "$file" "not decrypted" && \
+                                                                rm "$filedecrypt" && \
+                                                                echo "$file" "deleted from pdf_dec" && \
+                                                                mv "$file" "$filedecerror" && \
+                                                                continue
+                                ocrmypdf --deskew --force-ocr --output-type pdf -l "eng+nld" "$filedecrypt" "$fileocr" && \
+                                    echo "$file" "ocr-ed" && \
+                                rm "$filedecrypt" && \
+                                    echo "$file" "deleted from pdf_dec"
+                            fi
+                        fi
+                               mv "$file" "$fileorig" && \
+                                    echo "$file" "moved to orig" ;;
                         *) mv "$file" "$fileorig" && echo "$file" "Oops" ;;
                         esac
                         shopt -u nocasematch
