@@ -1,7 +1,7 @@
 #!/bin/bash
 # 1. Watch WATCHED_DIR folder recursively.
 # 2. in ocr_and_email_92.sh: OCR pdf-images to multipage pdf documents with tex$
-# 
+#
 #change the variable below with the folder you want this script to watch for ne$
 
 . /appenv/bin/activate
