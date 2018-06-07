@@ -11,8 +11,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   tesseract-ocr-spa \
   tesseract-ocr-por \
   tesseract-ocr-chi-sim \
+  tesseract-ocr-nld
   python3-venv \
-  python3-pip
+  python3-pip\
+  inotify-tools
 
 ENV LANG=C.UTF-8
 
