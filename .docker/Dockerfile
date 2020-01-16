@@ -60,9 +60,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   tesseract-ocr-deu \
   tesseract-ocr-eng \
   tesseract-ocr-fra \
-  tesseract-ocr-por \
+  tesseract-ocr-nld \
   tesseract-ocr-spa \
-  unpaper
+  unpaper \
+  inotify-tools
 
 WORKDIR /app
 
