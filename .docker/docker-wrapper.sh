@@ -24,7 +24,7 @@ while read event; do
                         shopt -s nocasematch
                         case "$filename" in
                         .*.pdf) rm "$file" && echo "$file" "deleted";;
-                        *.pdf) ocrmypdf --deskew --output-type pdf --skip-text -l "eng+nld" "$file" "$fileocr"
+                        *.pdf) ocrmypdf --output-type pdf -l "eng+nld" "$file" "$fileocr"
                         return_code=$?
                         if [ $return_code -eq 0 ]
                             then
